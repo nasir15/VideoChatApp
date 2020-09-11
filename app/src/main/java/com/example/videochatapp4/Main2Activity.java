@@ -133,7 +133,7 @@ public class Main2Activity extends AppCompatActivity implements  Session.Session
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    if (count < 1) {
+
                         API_KEY = response.getString("apiKey");
                         SESSION_ID = response.getString("sessionId");
                         TOKEN = response.getString("token");
@@ -152,14 +152,14 @@ public class Main2Activity extends AppCompatActivity implements  Session.Session
                         mSession = new Session.Builder(Main2Activity.this, API_KEY, SESSION_ID).build();
                         mSession.setSessionListener(Main2Activity.this);
                         mSession.connect(TOKEN);
-                    }
-                    else
-                    {
 
-                        Toast.makeText(getApplicationContext(), "User is busy", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(Main2Activity.this, MainActivity.class);
-                        startActivity(intent);
-                    }
+//                    else
+//                    {
+//
+//                        Toast.makeText(getApplicationContext(), "User is busy", Toast.LENGTH_SHORT).show();
+//                        Intent intent = new Intent(Main2Activity.this, MainActivity.class);
+//                        startActivity(intent);
+//                    }
                     } catch(JSONException error){
                         Log.e(LOG_TAG, "Web Service error: " + error.getMessage());
                     }
@@ -314,13 +314,14 @@ public class Main2Activity extends AppCompatActivity implements  Session.Session
         if (mPublisher.getView() instanceof GLSurfaceView){
             ((GLSurfaceView) mPublisher.getView()).setZOrderOnTop(true);
         }
-             if (maxid<=2) {
-                 mSession.publish(mPublisher);
-             }
-             else {
-
-                 Toast.makeText(getApplicationContext(),"User is busy",Toast.LENGTH_SHORT).show();
-             }
+        mSession.publish(mPublisher);
+//             if (maxid<=2) {
+//
+//             }
+//             else {
+//
+//                 Toast.makeText(getApplicationContext(),"User is busy",Toast.LENGTH_SHORT).show();
+//             }
 //        reff.push().setValue(session);
     }
 
@@ -335,21 +336,22 @@ public class Main2Activity extends AppCompatActivity implements  Session.Session
     public void onStreamReceived(Session session, Stream stream) {
         Log.i(LOG_TAG, "Stream Received");
         System.out.println("THis is stream"+stream);
-         if (maxid<2) {
-             if (mSubscriber == null) {
-                 mSubscriber = new Subscriber.Builder(this, stream).build();
-                 mSession.subscribe(mSubscriber);
-                 mSubscriberViewContainer.addView(mSubscriber.getView());
-             }
-         }
+        if (mSubscriber == null) {
+            mSubscriber = new Subscriber.Builder(this, stream).build();
+            mSession.subscribe(mSubscriber);
+            mSubscriberViewContainer.addView(mSubscriber.getView());
+        }
+//        if (maxid<2) {
+//
+//         }
 
-        else if(mSubscriber == null){
-             System.out.println("this is count 8 "+count);
-             cancel.setEnabled(false);
-             Toast.makeText(getApplicationContext(),"User is busy",Toast.LENGTH_LONG).show();
-             Intent intent = new Intent(Main2Activity.this, MainActivity.class);
-             startActivity(intent);
-         }
+//        else if(mSubscriber == null){
+//             System.out.println("this is count 8 "+count);
+//             cancel.setEnabled(false);
+//             Toast.makeText(getApplicationContext(),"User is busy",Toast.LENGTH_LONG).show();
+//             Intent intent = new Intent(Main2Activity.this, MainActivity.class);
+//             startActivity(intent);
+//         }
 
     }
 
